@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
         if (scenename != "GameOver")
         {
             LoadedLevel.LoadedLevelString = scenename;
+            RemainingTime.ResetTime();
         }
         SceneManager.LoadScene(scenename);
     }
