@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,8 @@ public class GuardVision : MonoBehaviour
     [SerializeField] private TextMeshProUGUI alertMesh;
     [SerializeField] private float detectionTime = 0.5f;
     [SerializeField] private UnityEvent guardCaughtPlayer;
+    private AIPath aiPath;
+    private bool caught;
 
     private float _detectedTime;
 
@@ -17,8 +20,19 @@ public class GuardVision : MonoBehaviour
         _detectedTime = 0;
         alertMesh.text = "";
         alertMesh.color = Color.yellow;
+        aiPath = GetComponentInParent<AIPath>();
     }
 
+    void Update()
+    {
+        if (aiPath.canMove)
+        {
+            alertMesh.color = Color.red;
+            alertMesh.text = "!!!";
+            caught = true;
+            guardCaughtPlayer.Invoke();
+        }
+    }
     void OnTriggerStay2D(Collider2D collider2D)
     {
         if (collider2D.CompareTag("Player"))
@@ -30,6 +44,7 @@ public class GuardVision : MonoBehaviour
         {
             alertMesh.color = Color.red;
             alertMesh.text = "!!!";
+            caught = true;
             guardCaughtPlayer.Invoke();
         }
         else if (_detectedTime >= detectionTime / 3 * 2)
@@ -47,6 +62,8 @@ public class GuardVision : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D collider2D)
     {
+        if(caught)
+            return;
         if (collider2D.CompareTag("Player"))
         {
             _detectedTime = 0f;
