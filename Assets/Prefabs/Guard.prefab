@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiPath: {fileID: 2700056961356666883}
+  DamageCooldown: 0
 --- !u!61 &233898160
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -548,7 +549,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0
 --- !u!1 &2700056961586248305
 GameObject:
