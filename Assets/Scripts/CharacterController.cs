@@ -4,6 +4,7 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] private float speedMultiplier=7.5f;
     [SerializeField] private float slowSpeedMultiplier=2.0f;
+    [SerializeField] private BoxCollider2D attackCollider;
     private float _currentSpeed;
     private float _horizontal;
     private float _vertical;
@@ -21,11 +22,11 @@ public class CharacterController : MonoBehaviour
     {
         if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "AttackAnimation")
         {
-            _currentSpeed = slowSpeedMultiplier;
+            Attacking();
         }
         else
         {
-            _currentSpeed = speedMultiplier;
+            Walking();
         }
         _horizontal = Input.GetAxis("Horizontal");
         if (_horizontal < 0)
@@ -39,7 +40,19 @@ public class CharacterController : MonoBehaviour
         _vertical = Input.GetAxis("Vertical");
         _animator.SetBool("Attacking", Input.GetKey(KeyCode.Space));
     }
-    
+
+    private void Walking()
+    {
+        attackCollider.enabled = false;
+        _currentSpeed = speedMultiplier;
+    }
+
+    private void Attacking()
+    {
+        attackCollider.enabled = true;
+        _currentSpeed = slowSpeedMultiplier;
+    }
+
     void FixedUpdate()
     {
         Vector2 movement = new Vector2(_horizontal, _vertical);
