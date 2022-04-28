@@ -16,6 +16,13 @@ public class GuardAnimetionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animator.GetBool("Death"))
+        {
+            gameObject.GetComponentInParent<AIPath>().canMove = false;
+            gameObject.GetComponentInParent<BoxCollider2D>().enabled = false;
+            transform.parent.GetComponentInChildren<PolygonCollider2D>().enabled = false;
+            return;
+        }
         if (!facingRight && aiPath.desiredVelocity.x > 0.1f)
         {
             Flip();

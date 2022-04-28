@@ -113,7 +113,7 @@ public class CharacterController : MonoBehaviour
     {
         if (collider2D.CompareTag("Guard"))
         {
-            Destroy(collider2D.gameObject);
+            collider2D.GetComponentInChildren<Animator>().SetBool("Death", true);
         }
     }
 }
