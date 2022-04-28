@@ -9,10 +9,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private GameObject ParticlesRight;
     [SerializeField] private GameObject ParticlesUp;
     [SerializeField] private GameObject ParticlesDown;
-    private ParticleSystem particleSystemRight;
-    private ParticleSystem particleSystemLeft;
-    private ParticleSystem particleSystemUp;
-    private ParticleSystem particleSystemDown;
+    private ParticleSystem _particleSystemRight;
+    private ParticleSystem _particleSystemLeft;
+    private ParticleSystem _particleSystemUp;
+    private ParticleSystem _particleSystemDown;
     private float _currentSpeed;
     private float _horizontal;
     private float _vertical;
@@ -22,10 +22,10 @@ public class CharacterController : MonoBehaviour
 
     void Start()
     {
-        particleSystemLeft = ParticlesLeft.GetComponent<ParticleSystem>();
-        particleSystemRight = ParticlesRight.GetComponent<ParticleSystem>();
-        particleSystemUp = ParticlesUp.GetComponent<ParticleSystem>();
-        particleSystemDown = ParticlesDown.GetComponent<ParticleSystem>();
+        _particleSystemLeft = ParticlesLeft.GetComponent<ParticleSystem>();
+        _particleSystemRight = ParticlesRight.GetComponent<ParticleSystem>();
+        _particleSystemUp = ParticlesUp.GetComponent<ParticleSystem>();
+        _particleSystemDown = ParticlesDown.GetComponent<ParticleSystem>();
         _animator = GetComponent<Animator>();
         _scale = transform.localScale;
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -45,27 +45,27 @@ public class CharacterController : MonoBehaviour
         {
             case < 0:
             {
-                var emissionLeft = particleSystemLeft.emission;
+                var emissionLeft = _particleSystemLeft.emission;
                 emissionLeft.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionRight = particleSystemRight.emission;
+                var emissionRight = _particleSystemRight.emission;
                 emissionRight.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
                 transform.localScale = new Vector3(_scale.x * -1, _scale.y, _scale.z);
                 break;
             }
             case > 0:
             {
-                var emissionLeft = particleSystemLeft.emission;
+                var emissionLeft = _particleSystemLeft.emission;
                 emissionLeft.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
-                var emissionRight = particleSystemRight.emission;
+                var emissionRight = _particleSystemRight.emission;
                 emissionRight.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
                 transform.localScale = new Vector3(_scale.x, _scale.y, _scale.z);
                 break;
             }
             default:
             {
-                var emissionLeft = particleSystemLeft.emission;
+                var emissionLeft = _particleSystemLeft.emission;
                 emissionLeft.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionRight = particleSystemRight.emission;
+                var emissionRight = _particleSystemRight.emission;
                 emissionRight.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
                 break;
             }
@@ -75,26 +75,26 @@ public class CharacterController : MonoBehaviour
         {
             case < 0:
             {
-                var emissionUp = particleSystemUp.emission;
+                var emissionUp = _particleSystemUp.emission;
                 emissionUp.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
-                var emissionDown = particleSystemDown.emission;
+                var emissionDown = _particleSystemDown.emission;
                 emissionDown.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
                 break;
             }
             case > 0:
             {
-                var emissionUp = particleSystemUp.emission;
+                var emissionUp = _particleSystemUp.emission;
                 emissionUp.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionDown = particleSystemDown.emission;
+                var emissionDown = _particleSystemDown.emission;
                 emissionDown.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
                 break;
 
             }
             default:
             {
-                var emissionUp = particleSystemUp.emission;
+                var emissionUp = _particleSystemUp.emission;
                 emissionUp.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionDown = particleSystemDown.emission;
+                var emissionDown = _particleSystemDown.emission;
                 emissionDown.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
                 break;
             }
