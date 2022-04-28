@@ -58,4 +58,12 @@ public class CharacterController : MonoBehaviour
         Vector2 movement = new Vector2(_horizontal, _vertical);
         _rigidbody2D.velocity = movement * _currentSpeed;
     }
+
+    void OnTriggerEnter2D(Collider2D collider2D)
+    {
+        if (collider2D.CompareTag("Guard"))
+        {
+            Destroy(collider2D.gameObject);
+        }
+    }
 }
