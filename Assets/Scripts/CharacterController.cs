@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour
@@ -7,6 +8,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float slowSpeedMultiplier=2.0f;
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] private GameObject Particles;
+    public float Health = 100;
     private float stabSoundLength;
     private float stabSoundPlaying;
     private float currentSoundLength;
@@ -75,6 +77,10 @@ public class CharacterController : MonoBehaviour
             playlength += Time.deltaTime;
         }
 
+        if (Health <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
         _animator.SetBool("Attacking", Input.GetKey(KeyCode.Space));
     }
 

@@ -5137,7 +5137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 501
   m_Sprite: {fileID: 1586594449, guid: 2b2f83ba29d80ec4eac4b9c9c517b67e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5211,6 +5211,7 @@ MonoBehaviour:
   slowSpeedMultiplier: 2
   attackCollider: {fileID: 1543844777}
   Particles: {fileID: 1193990427}
+  Health: 100
   sounds:
   - {fileID: 8300000, guid: 01fe59e69b447014d92fd0bc6bd45501, type: 3}
   - {fileID: 8300000, guid: a7fb2bb2629d6c84dbb08bae82b83c4a, type: 3}
