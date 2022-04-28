@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour
 {
@@ -6,6 +7,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float slowSpeedMultiplier=2.0f;
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] private GameObject Particles;
+    private float currentSoundLength;
+    private float playlength;
+    public AudioClip[] sounds;
+    private AudioSource source;
     private ParticleSystem _particleSystem;
     private float _currentSpeed;
     private float _horizontal;
@@ -16,6 +21,7 @@ public class CharacterController : MonoBehaviour
 
     void Start()
     {
+        source = GetComponent<AudioSource>();
         _particleSystem = Particles.GetComponent<ParticleSystem>();
         _animator = GetComponent<Animator>();
         _scale = transform.localScale;
@@ -55,6 +61,14 @@ public class CharacterController : MonoBehaviour
         {
             var em = _particleSystem.emission;
             em.rateOverTime = 100;
+            if (playlength >= currentSoundLength)
+            {
+                source.clip = sounds[Random.Range(0, sounds.Length)];
+                currentSoundLength = source.clip.length;
+                source.Play();
+                playlength = -0.3f;
+            }
+            playlength += Time.deltaTime;
         }
         _animator.SetBool("Attacking", Input.GetKey(KeyCode.Space));
     }
