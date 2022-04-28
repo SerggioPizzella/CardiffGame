@@ -7,9 +7,12 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float slowSpeedMultiplier=2.0f;
     [SerializeField] private BoxCollider2D attackCollider;
     [SerializeField] private GameObject Particles;
+    private float stabSoundLength;
+    private float stabSoundPlaying;
     private float currentSoundLength;
     private float playlength;
     public AudioClip[] sounds;
+    public AudioClip StabSound;
     private AudioSource source;
     private ParticleSystem _particleSystem;
     private float _currentSpeed;
@@ -21,6 +24,7 @@ public class CharacterController : MonoBehaviour
 
     void Start()
     {
+        stabSoundLength = StabSound.length;
         source = GetComponent<AudioSource>();
         _particleSystem = Particles.GetComponent<ParticleSystem>();
         _animator = GetComponent<Animator>();
@@ -70,6 +74,7 @@ public class CharacterController : MonoBehaviour
             }
             playlength += Time.deltaTime;
         }
+
         _animator.SetBool("Attacking", Input.GetKey(KeyCode.Space));
     }
 
@@ -83,6 +88,13 @@ public class CharacterController : MonoBehaviour
     {
         attackCollider.enabled = true;
         _currentSpeed = slowSpeedMultiplier;
+        if (stabSoundPlaying >= stabSoundLength)
+        {
+            source.PlayOneShot(StabSound);
+            stabSoundPlaying = -0.25f;
+        }
+
+        stabSoundPlaying += Time.deltaTime;
     }
 
     void FixedUpdate()

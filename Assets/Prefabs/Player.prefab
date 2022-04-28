@@ -5088,6 +5088,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b2bd7793270b8f74697d491c7bc30426, type: 3}
   - {fileID: 8300000, guid: dc796488898747240b38e28653a25c2b, type: 3}
   - {fileID: 8300000, guid: 2dc84320b5af25646b060e4968152901, type: 3}
+  StabSound: {fileID: 8300000, guid: e4e11fc1d1c3bf145a421f6005cb2b9b, type: 3}
 --- !u!50 &998122490288318405
 Rigidbody2D:
   serializedVersion: 4
