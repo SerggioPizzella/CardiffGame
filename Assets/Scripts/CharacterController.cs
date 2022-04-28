@@ -5,14 +5,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float speedMultiplier=7.5f;
     [SerializeField] private float slowSpeedMultiplier=2.0f;
     [SerializeField] private BoxCollider2D attackCollider;
-    [SerializeField] private GameObject ParticlesLeft;
-    [SerializeField] private GameObject ParticlesRight;
-    [SerializeField] private GameObject ParticlesUp;
-    [SerializeField] private GameObject ParticlesDown;
-    private ParticleSystem _particleSystemRight;
-    private ParticleSystem _particleSystemLeft;
-    private ParticleSystem _particleSystemUp;
-    private ParticleSystem _particleSystemDown;
+    [SerializeField] private GameObject Particles;
+    private ParticleSystem _particleSystem;
     private float _currentSpeed;
     private float _horizontal;
     private float _vertical;
@@ -22,10 +16,7 @@ public class CharacterController : MonoBehaviour
 
     void Start()
     {
-        _particleSystemLeft = ParticlesLeft.GetComponent<ParticleSystem>();
-        _particleSystemRight = ParticlesRight.GetComponent<ParticleSystem>();
-        _particleSystemUp = ParticlesUp.GetComponent<ParticleSystem>();
-        _particleSystemDown = ParticlesDown.GetComponent<ParticleSystem>();
+        _particleSystem = Particles.GetComponent<ParticleSystem>();
         _animator = GetComponent<Animator>();
         _scale = transform.localScale;
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -45,59 +36,25 @@ public class CharacterController : MonoBehaviour
         {
             case < 0:
             {
-                var emissionLeft = _particleSystemLeft.emission;
-                emissionLeft.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionRight = _particleSystemRight.emission;
-                emissionRight.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
                 transform.localScale = new Vector3(_scale.x * -1, _scale.y, _scale.z);
                 break;
             }
             case > 0:
             {
-                var emissionLeft = _particleSystemLeft.emission;
-                emissionLeft.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
-                var emissionRight = _particleSystemRight.emission;
-                emissionRight.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
                 transform.localScale = new Vector3(_scale.x, _scale.y, _scale.z);
-                break;
-            }
-            default:
-            {
-                var emissionLeft = _particleSystemLeft.emission;
-                emissionLeft.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionRight = _particleSystemRight.emission;
-                emissionRight.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
                 break;
             }
         }
         _vertical = Input.GetAxis("Vertical");
-        switch (_vertical)
+        if (_vertical == 0 & _horizontal == 0)
         {
-            case < 0:
-            {
-                var emissionUp = _particleSystemUp.emission;
-                emissionUp.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
-                var emissionDown = _particleSystemDown.emission;
-                emissionDown.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                break;
-            }
-            case > 0:
-            {
-                var emissionUp = _particleSystemUp.emission;
-                emissionUp.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionDown = _particleSystemDown.emission;
-                emissionDown.rateOverTime = new ParticleSystem.MinMaxCurve(100, 100);
-                break;
-
-            }
-            default:
-            {
-                var emissionUp = _particleSystemUp.emission;
-                emissionUp.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                var emissionDown = _particleSystemDown.emission;
-                emissionDown.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
-                break;
-            }
+            var em = _particleSystem.emission;
+            em.rateOverTime = 0;
+        }
+        else
+        {
+            var em = _particleSystem.emission;
+            em.rateOverTime = 100;
         }
         _animator.SetBool("Attacking", Input.GetKey(KeyCode.Space));
     }
