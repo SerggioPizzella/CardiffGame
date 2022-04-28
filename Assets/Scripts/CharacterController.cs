@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour
@@ -15,6 +16,7 @@ public class CharacterController : MonoBehaviour
     private float playlength;
     public AudioClip[] sounds;
     public AudioClip StabSound;
+    public Scrollbar healthBar;
     private AudioSource source;
     private ParticleSystem _particleSystem;
     private float _currentSpeed;
@@ -35,6 +37,7 @@ public class CharacterController : MonoBehaviour
     }
     void Update()
     {
+        healthBar.size = Health / 100;
         if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "AttackAnimation")
         {
             Attacking();
