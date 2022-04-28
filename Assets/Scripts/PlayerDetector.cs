@@ -1,3 +1,4 @@
+using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,9 +9,12 @@ public class PlayerDetector : MonoBehaviour
     private float _detectedTime = 0f;
     private GameObject _detectionBar;
     private Transform _detectionBarTransform;
+    private AIPath[] aiPaths;
+    private bool detected;
 
     void Start()
     {
+        aiPaths = FindObjectsOfType<AIPath>();
         _detectionBar = GameObject.Find("DetectionBar");
         _detectionBarTransform = _detectionBar.transform;
     }
@@ -25,11 +29,17 @@ public class PlayerDetector : MonoBehaviour
 
         if (_detectedTime >= DetectionTime)
         {
-            SceneManager.LoadScene("GameOver");
+            foreach (var aipath in aiPaths)
+            {
+                detected = true;
+                aipath.canMove = true;
+            }
         }
     }
     void OnTriggerExit2D(Collider2D collider2D)
     {
+        if (detected)
+            return;
         if (collider2D.CompareTag("Player"))
         {
             _detectedTime = 0f;
