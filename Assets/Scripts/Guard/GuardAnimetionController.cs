@@ -19,7 +19,7 @@ public class GuardAnimetionController : MonoBehaviour
         if (animator.GetBool("Death"))
         {
             gameObject.GetComponentInParent<AIPath>().canMove = false;
-            gameObject.GetComponentInParent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponentInParent<CircleCollider2D>().enabled = false;
             transform.parent.GetComponentInChildren<PolygonCollider2D>().enabled = false;
             return;
         }

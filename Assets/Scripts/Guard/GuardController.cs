@@ -17,6 +17,9 @@ public class GuardController : MonoBehaviour
 
     public void Update()
     {
+        if(!aiPath.canMove)
+            return;
+        
         if (Vector2.Distance(player.transform.position, transform.position) <= 1)
         {
             if (dealtDamage >= DamageCooldown)
@@ -24,8 +27,8 @@ public class GuardController : MonoBehaviour
                 player.GetComponent<CharacterController>().Health-=25;
                 dealtDamage = 0;
             }
-            dealtDamage += Time.deltaTime;
         }
+        dealtDamage += Time.deltaTime;
     }
 
     public void startMoving()
